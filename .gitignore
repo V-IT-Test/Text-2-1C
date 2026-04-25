@@ -33,3 +33,8 @@ evaluation/results/
 
 # Локальные вспомогательные скрипты — не часть проекта.
 tools/
+
+# Локальные внутренние документы — в репо не выкладываем.
+CLAUDE.md
+research/methods_discussion.md
+pipeline/ambiguity_resolver.py
