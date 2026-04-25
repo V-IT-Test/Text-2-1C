@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+venv64/
+.venv/
+
+# Секреты — НЕ коммитим
+.env
+.env.local
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 1C XML export — большой, генерируемый, не коммитим
+databases/*/XMLConfiguration/
+
+# Сжатую схему оставляем — она маленькая и нужна для воспроизводимости.
+# databases/*/DBStructure/schema.md  ← НЕ игнорируем
+
+# Локальные тестовые отчёты, если появятся
+evaluation/results/
+*.log
+
+# Сгенерированные документы (Word, PDF) — собираются скриптом из Markdown,
+# в репозитории храним только исходники.
+*.docx
+*.pdf
+
+# Локальные вспомогательные скрипты — не часть проекта.
+tools/

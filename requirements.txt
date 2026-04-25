@@ -1,0 +1,4 @@
+# Основное окружение (venv64) — UI и LLM-вызовы.
+streamlit>=1.32
+openai>=1.30
+python-dotenv>=1.0
