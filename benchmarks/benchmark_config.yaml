@@ -1,0 +1,159 @@
+# ============================================================
+# Конфигурация батч-бенчмарка NL-to-1C
+# ============================================================
+
+# Ключ базы данных (для однобазовых бенчмарков — demo).
+# Для мульти-базовых (spider_mini) — игнорируется, db_id берётся из вопросов.
+database: demo
+
+# Файл с вопросами и эталонными запросами (создан prepare_benchmark.py)
+benchmark_file: databases/demo/benchmark.json
+
+# Файл с эталонными результатами выполнения
+# Создаётся командой: python benchmarks/runner.py --generate-reference
+reference_results: databases/demo/reference_results.json
+
+# ============================================================
+# Эксперименты — конфигурации пайплайна
+#
+# Доступные параметры каждого эксперимента:
+#
+#   name              — уникальное имя (используется в именах файлов результатов)
+#
+#   model             — модель LLM (ключи из LLM_MODELS в config.py):
+#                         gpt-4o-mini       (лёгкая, дефолт)
+#                         gpt-5.4-mini      (средняя)
+#                         gpt-5.4           (мощная)
+#                         o4-mini           (думающая, reasoning)
+#                         gpt-5.4           (мощная)
+#                         o4-mini           (думающая, reasoning)
+#
+#   use_schema        — передавать схему базы в LLM
+#                         true  → schema.md добавляется в контекст
+#                         false → LLM работает без описания структуры БД
+#
+#   advanced_prompt   — продвинутый полный промпт (~10 КБ, 21 секция + 8 примеров)
+#   advanced_short    — краткий продвинутый промпт (~2 КБ, сжатые правила)
+#                       (advanced_prompt и advanced_short взаимоисключающие;
+#                        если оба false — используется базовый промпт)
+#
+#   use_cot           — Chain-of-Thought: LLM рассуждает пошагово,
+#                         финальный запрос извлекается из тега <query>
+#   use_query_plan    — Query Plan: сначала строится план на русском,
+#                         затем генерируется запрос по плану (2 вызова LLM)
+#                       (use_cot и use_query_plan взаимоисключающие)
+#
+#   use_schema_linking — дополнительный вызов LLM для отбора только
+#                         релевантных объектов схемы (+1 вызов LLM)
+#   use_value_linking  — загружает примеры данных из БД и добавляет в
+#                         контекст схемы (без LLM, запрос к БД)
+#
+#   use_critic        — агент-критик: отдельный LLM-вызов проверяет запрос,
+#                         при необходимости запрашивает исправление (+1–2 вызова)
+#   use_exec_feedback — автоматическое исправление по ошибке выполнения:
+#                         запрос выполняется, при ошибке LLM получает
+#                         текст ошибки и генерирует исправление (до 2 попыток)
+# ============================================================
+
+experiments:
+
+  # 1. Схема + продвинутый полный промпт
+  - name: schema_adv
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+
+  # 2. Схема + продвинутый краткий промпт
+  - name: schema_adv_short
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_short: true
+
+  # 3. Схема + продвинутый + Chain-of-Thought
+  - name: schema_adv_cot
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_cot: true
+
+  # 4. Схема + продвинутый + Query Plan
+  - name: schema_adv_qp
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_query_plan: true
+
+  # 5. Схема + продвинутый + Schema Linking
+  - name: schema_adv_sl
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_schema_linking: true
+
+  # 6. Схема + продвинутый + Value Linking
+  - name: schema_adv_vl
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_value_linking: true
+
+  # 7. Схема + продвинутый + Критик
+  - name: schema_adv_critic
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_critic: true
+
+  # 8. Схема + продвинутый + Execution Feedback
+  - name: schema_adv_ef
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_exec_feedback: true
+
+  # 9. Схема + продвинутый + CoT + Value Linking
+  - name: schema_adv_cot_vl
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_cot: true
+    use_value_linking: true
+
+  # 10. Схема + продвинутый + CoT + VL + Критик
+  - name: schema_adv_cot_vl_critic
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_cot: true
+    use_value_linking: true
+    use_critic: true
+
+  # 11. Схема + продвинутый + CoT + VL + Exec Feedback
+  - name: schema_adv_cot_vl_ef
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_cot: true
+    use_value_linking: true
+    use_exec_feedback: true
+
+  # 12. Схема + продвинутый + CoT + VL + Критик + Exec Feedback
+  - name: schema_adv_cot_vl_critic_ef
+    model: gpt-4o-mini
+    use_schema: true
+    advanced_prompt: true
+    use_cot: true
+    use_value_linking: true
+    use_critic: true
+    use_exec_feedback: true
+
+  # ══════════════════════════════════════════════════════════════
+  # Лучшая комбинация (справочно, не запускается):
+  #
+  # - name: schema_best
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_value_linking: true
+  #   use_cot: true
+  # ══════════════════════════════════════════════════════════════

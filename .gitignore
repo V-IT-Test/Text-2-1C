@@ -26,6 +26,9 @@ databases/*/XMLConfiguration/
 evaluation/results/
 *.log
 
+# Сторонние датасеты (Spider и т.п.) — большие, качаются по необходимости
+research/datasets/
+
 # Сгенерированные документы (Word, PDF) — собираются скриптом из Markdown,
 # в репозитории храним только исходники.
 *.docx
@@ -37,4 +40,10 @@ tools/
 # Локальные внутренние документы — в репо не выкладываем.
 CLAUDE.md
 research/methods_discussion.md
-pipeline/ambiguity_resolver.py
+pipeline/IMPROVEMENTS.md
+**/SESSION_SUMMARY.md
+**/Session_summary.md
+**/session_summary.md
+
+# Бинарные SQLite-базы
+*.sqlite

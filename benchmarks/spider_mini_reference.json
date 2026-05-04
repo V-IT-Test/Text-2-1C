@@ -1,0 +1,1428 @@
+[
+  {
+    "id": 1,
+    "db_id": "race_track",
+    "question": "Подсчитайте количество гонок.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Race",
+    "rows": [
+      {
+        "Поле1": 7
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 2,
+    "db_id": "race_track",
+    "question": "Покажите наименование, класс и дату для всех гонок.",
+    "reference_query": "ВЫБРАТЬ Наименование, Class, Date ИЗ Справочник.Race",
+    "rows": [
+      {
+        "Наименование": "Rolex 24 At Daytona",
+        "Class": "DP/GT",
+        "Date": "January 26 January 27"
+      },
+      {
+        "Наименование": "Gainsco Grand Prix of Miami",
+        "Class": "DP/GT",
+        "Date": "March 29"
+      },
+      {
+        "Наименование": "Mexico City 250",
+        "Class": "DP/GT",
+        "Date": "April 19"
+      },
+      {
+        "Наименование": "Bosch Engineering 250 at VIR",
+        "Class": "GT",
+        "Date": "April 27"
+      },
+      {
+        "Наименование": "RumBum.com 250",
+        "Class": "DP/GT",
+        "Date": "May 17"
+      },
+      {
+        "Наименование": "Lime Rock GT Classic 250",
+        "Class": "GT",
+        "Date": "May 26"
+      },
+      {
+        "Наименование": "Sahlen's Six Hours of the Glen",
+        "Class": "DP/GT",
+        "Date": "June 7"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 3,
+    "db_id": "race_track",
+    "question": "Покажите наименование и местоположение всех трасс.",
+    "reference_query": "ВЫБРАТЬ Наименование, Location ИЗ Справочник.Track",
+    "rows": [
+      {
+        "Наименование": "Auto Club Speedway",
+        "Location": "Fontana, CA"
+      },
+      {
+        "Наименование": "Chicagoland Speedway",
+        "Location": "Joliet, IL"
+      },
+      {
+        "Наименование": "Darlington Raceway",
+        "Location": "Darlington, SC"
+      },
+      {
+        "Наименование": "Daytona International Speedway",
+        "Location": "Daytona Beach, FL"
+      },
+      {
+        "Наименование": "Homestead-Miami Speedway",
+        "Location": "Homestead, FL"
+      },
+      {
+        "Наименование": "Kansas Speedway",
+        "Location": "Kansas City, KS"
+      },
+      {
+        "Наименование": "Martinsville Speedway",
+        "Location": "Ridgeway, VA"
+      },
+      {
+        "Наименование": "Michigan International Speedway",
+        "Location": "Brooklyn, MI"
+      },
+      {
+        "Наименование": "Phoenix International Raceway",
+        "Location": "Avondale, AZ"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 4,
+    "db_id": "race_track",
+    "question": "Каковы наименования и местоположения всех трасс?",
+    "reference_query": "ВЫБРАТЬ Наименование, Location ИЗ Справочник.Track",
+    "rows": [
+      {
+        "Наименование": "Auto Club Speedway",
+        "Location": "Fontana, CA"
+      },
+      {
+        "Наименование": "Chicagoland Speedway",
+        "Location": "Joliet, IL"
+      },
+      {
+        "Наименование": "Darlington Raceway",
+        "Location": "Darlington, SC"
+      },
+      {
+        "Наименование": "Daytona International Speedway",
+        "Location": "Daytona Beach, FL"
+      },
+      {
+        "Наименование": "Homestead-Miami Speedway",
+        "Location": "Homestead, FL"
+      },
+      {
+        "Наименование": "Kansas Speedway",
+        "Location": "Kansas City, KS"
+      },
+      {
+        "Наименование": "Martinsville Speedway",
+        "Location": "Ridgeway, VA"
+      },
+      {
+        "Наименование": "Michigan International Speedway",
+        "Location": "Brooklyn, MI"
+      },
+      {
+        "Наименование": "Phoenix International Raceway",
+        "Location": "Avondale, AZ"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 5,
+    "db_id": "race_track",
+    "question": "Каковы наименования, классы и даты всех гонок?",
+    "reference_query": "ВЫБРАТЬ Наименование, Class, Date ИЗ Справочник.Race",
+    "rows": [
+      {
+        "Наименование": "Rolex 24 At Daytona",
+        "Class": "DP/GT",
+        "Date": "January 26 January 27"
+      },
+      {
+        "Наименование": "Gainsco Grand Prix of Miami",
+        "Class": "DP/GT",
+        "Date": "March 29"
+      },
+      {
+        "Наименование": "Mexico City 250",
+        "Class": "DP/GT",
+        "Date": "April 19"
+      },
+      {
+        "Наименование": "Bosch Engineering 250 at VIR",
+        "Class": "GT",
+        "Date": "April 27"
+      },
+      {
+        "Наименование": "RumBum.com 250",
+        "Class": "DP/GT",
+        "Date": "May 17"
+      },
+      {
+        "Наименование": "Lime Rock GT Classic 250",
+        "Class": "GT",
+        "Date": "May 26"
+      },
+      {
+        "Наименование": "Sahlen's Six Hours of the Glen",
+        "Class": "DP/GT",
+        "Date": "June 7"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 6,
+    "db_id": "race_track",
+    "question": "Верните наименования трасс, на которых не проводилось ни одной гонки.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Track ГДЕ Ссылка НЕ В (ВЫБРАТЬ Track_ID ИЗ Справочник.Race)",
+    "rows": [
+      {
+        "Наименование": "Darlington Raceway"
+      },
+      {
+        "Наименование": "Michigan International Speedway"
+      },
+      {
+        "Наименование": "Phoenix International Raceway"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 7,
+    "db_id": "race_track",
+    "question": "Найдите местоположения, где есть и трассы с количеством мест более 90000, и трассы с количеством мест менее 70000.",
+    "reference_query": "ВЫБРАТЬ РАЗЛИЧНЫЕ T1.Location ИЗ Справочник.Track КАК T1 ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Track КАК T2 ПО T1.Location = T2.Location ГДЕ T1.Seating > 90000 И T2.Seating < 70000",
+    "rows": [],
+    "error": null
+  },
+  {
+    "id": 8,
+    "db_id": "vehicle_driver",
+    "question": "Верните среднюю максимальную скорость всех транспортных средств.",
+    "reference_query": "ВЫБРАТЬ СРЕДНЕЕ(Top_Speed) ИЗ Справочник.Vehicle",
+    "rows": [
+      {
+        "Top_Speed": 150
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 9,
+    "db_id": "vehicle_driver",
+    "question": "Какова средняя максимальная скорость транспортных средств?",
+    "reference_query": "ВЫБРАТЬ СРЕДНЕЕ(Top_Speed) ИЗ Справочник.Vehicle",
+    "rows": [
+      {
+        "Top_Speed": 150
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 10,
+    "db_id": "vehicle_driver",
+    "question": "Укажите год выпуска, модель и производителя каждого транспортного средства.",
+    "reference_query": "ВЫБРАТЬ Build_Year, Наименование, Builder ИЗ Справочник.Vehicle",
+    "rows": [
+      {
+        "Build_Year": "1996",
+        "Наименование": "AC4000",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2000",
+        "Наименование": "DJ ",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2000–2001",
+        "Наименование": "DJ1",
+        "Builder": "Zhuzhou Siemens , Germany"
+      },
+      {
+        "Build_Year": "2001",
+        "Наименование": "DJ2",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2003",
+        "Наименование": "Tiansuo",
+        "Builder": "Datong"
+      },
+      {
+        "Build_Year": "2006–2010",
+        "Наименование": "HXD1",
+        "Builder": "Zhuzhou Siemens , Germany"
+      },
+      {
+        "Build_Year": "2012–",
+        "Наименование": "HXD1.1",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2012",
+        "Наименование": "HXD1.6",
+        "Builder": "Ziyang"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 11,
+    "db_id": "vehicle_driver",
+    "question": "Каковы год выпуска, наименование модели и производитель транспортных средств?",
+    "reference_query": "ВЫБРАТЬ Build_Year, Наименование, Builder ИЗ Справочник.Vehicle",
+    "rows": [
+      {
+        "Build_Year": "1996",
+        "Наименование": "AC4000",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2000",
+        "Наименование": "DJ ",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2000–2001",
+        "Наименование": "DJ1",
+        "Builder": "Zhuzhou Siemens , Germany"
+      },
+      {
+        "Build_Year": "2001",
+        "Наименование": "DJ2",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2003",
+        "Наименование": "Tiansuo",
+        "Builder": "Datong"
+      },
+      {
+        "Build_Year": "2006–2010",
+        "Наименование": "HXD1",
+        "Builder": "Zhuzhou Siemens , Germany"
+      },
+      {
+        "Build_Year": "2012–",
+        "Наименование": "HXD1.1",
+        "Builder": "Zhuzhou"
+      },
+      {
+        "Build_Year": "2012",
+        "Наименование": "HXD1.6",
+        "Builder": "Ziyang"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 12,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество разных водителей, которые управляли транспортными средствами, выпущенными в 2012 году.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(РАЗЛИЧНЫЕ VD.Driver_ID) ИЗ РегистрСведений.VehicleDriver КАК VD ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Vehicle КАК V ПО VD.Vehicle_ID = V.Ссылка ГДЕ V.Build_Year = 2012",
+    "rows": [
+      {
+        "Driver_ID": 0
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 13,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество водителей, участвовавших в гонках в каждой серии.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) КАК Количество, Racing_Series ИЗ Справочник.Driver СГРУППИРОВАТЬ ПО Racing_Series",
+    "rows": [
+      {
+        "Количество": 3,
+        "Racing_Series": "NASCAR"
+      },
+      {
+        "Количество": 1,
+        "Racing_Series": "IndyCar Series"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 14,
+    "db_id": "vehicle_driver",
+    "question": "Сколько водителей участвовало в гонках в каждой гоночной серии?",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) КАК Количество, Racing_Series ИЗ Справочник.Driver СГРУППИРОВАТЬ ПО Racing_Series",
+    "rows": [
+      {
+        "Количество": 3,
+        "Racing_Series": "NASCAR"
+      },
+      {
+        "Количество": 1,
+        "Racing_Series": "IndyCar Series"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 15,
+    "db_id": "vehicle_driver",
+    "question": "Сколько водителей управляли транспортными средствами, выпущенными в 2012 году?",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(РАЗЛИЧНЫЕ VD.Driver_ID) ИЗ РегистрСведений.VehicleDriver КАК VD ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Vehicle КАК V ПО VD.Vehicle_ID = V.Ссылка ГДЕ V.Build_Year = 2012",
+    "rows": [
+      {
+        "Driver_ID": 0
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 16,
+    "db_id": "vehicle_driver",
+    "question": "Верните имена водителей, которые управляли транспортными средствами с мощностью более 5000.",
+    "reference_query": "ВЫБРАТЬ РАЗЛИЧНЫЕ D.Наименование ИЗ Справочник.Driver КАК D ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.VehicleDriver КАК VD ПО D.Ссылка = VD.Driver_ID ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Vehicle КАК V ПО VD.Vehicle_ID = V.Ссылка ГДЕ V.Power > 5000",
+    "rows": [
+      {
+        "Наименование": "Jeff Gordon"
+      },
+      {
+        "Наименование": "Jimmie Johnson"
+      },
+      {
+        "Наименование": "Ryan Hunter-Reay"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 17,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество водителей, которые не управляли ни одним транспортным средством.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Driver ГДЕ Ссылка НЕ В (ВЫБРАТЬ Driver_ID ИЗ РегистрСведений.VehicleDriver)",
+    "rows": [
+      {
+        "Поле1": 0
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 18,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество транспортных средств, чья максимальная скорость равна максимальной среди всех транспортных средств.",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 КОЛИЧЕСТВО(*) КАК Cnt ИЗ Справочник.Vehicle СГРУППИРОВАТЬ ПО Top_Speed УПОРЯДОЧИТЬ ПО Top_Speed УБЫВ",
+    "rows": [
+      {
+        "Cnt": 3
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 19,
+    "db_id": "vehicle_driver",
+    "question": "Сколько транспортных средств имеют максимальную скорость?",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 КОЛИЧЕСТВО(*) КАК Cnt ИЗ Справочник.Vehicle СГРУППИРОВАТЬ ПО Top_Speed УПОРЯДОЧИТЬ ПО Top_Speed УБЫВ",
+    "rows": [
+      {
+        "Cnt": 3
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 20,
+    "db_id": "city_record",
+    "question": "Найдите идентификаторы матчей, в которых проводилось соревнование \"1994 FIFA World Cup qualification\".",
+    "reference_query": "ВЫБРАТЬ Код ИЗ Справочник.Match ГДЕ Competition = \"1994 FIFA World Cup qualification\"",
+    "rows": [
+      {
+        "Код": "2"
+      },
+      {
+        "Код": "3"
+      },
+      {
+        "Код": "4"
+      },
+      {
+        "Код": "5"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 21,
+    "db_id": "city_record",
+    "question": "Найдите ВВП города с самым большим региональным населением.",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 GDP ИЗ Справочник.City УПОРЯДОЧИТЬ ПО Regional_Population УБЫВ",
+    "rows": [
+      {
+        "GDP": 1919.57
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 22,
+    "db_id": "city_record",
+    "question": "В каком городе самая высокая температура в феврале?",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 Справочник.City.Наименование ИЗ Справочник.City ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Temperature КАК Temp ПО Справочник.City.Код = Temp.Код УПОРЯДОЧИТЬ ПО Temp.Feb УБЫВ",
+    "rows": [
+      {
+        "Наименование": "Suzhou ( Jiangsu )"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 23,
+    "db_id": "city_record",
+    "question": "Пожалуйста, выведите список городов, чьё региональное население превышает 8000000 или меньше 5000000.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.City ГДЕ Regional_Population > 10000000 ОБЪЕДИНИТЬ ВЫБРАТЬ Наименование ИЗ Справочник.City ГДЕ Regional_Population < 5000000",
+    "rows": [
+      {
+        "Наименование": "Shanghai"
+      },
+      {
+        "Наименование": "Suzhou ( Jiangsu )"
+      },
+      {
+        "Наименование": "Shaoxing ( Zhejiang )"
+      },
+      {
+        "Наименование": "Changzhou ( Jiangsu )"
+      },
+      {
+        "Наименование": "Jinhua ( Zhejiang )"
+      },
+      {
+        "Наименование": "Jiaxing ( Zhejiang )"
+      },
+      {
+        "Наименование": "Yangzhou ( Jiangsu )"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 24,
+    "db_id": "customers_and_orders",
+    "question": "Подсчитайте количество адресов.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Addresses",
+    "rows": [
+      {
+        "Поле1": 15
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 25,
+    "db_id": "customers_and_orders",
+    "question": "Перечислите все идентификаторы адресов и детали адресов.",
+    "reference_query": "ВЫБРАТЬ Код КАК address_id, Наименование КАК address_details ИЗ Справочник.Addresses",
+    "rows": [
+      {
+        "address_id": "1",
+        "address_details": "2632 Ofelia Stream Apt. 537 Rueckerborough, NV 78430-4096"
+      },
+      {
+        "address_id": "2",
+        "address_details": "481 Tyrique Junction West Kali, UT 16070-1379"
+      },
+      {
+        "address_id": "3",
+        "address_details": "4363 Otilia Hill Landenshire, ND 45637"
+      },
+      {
+        "address_id": "4",
+        "address_details": "1734 Klocko Views Suite 840 Schusterfort, WY 34067-3366"
+      },
+      {
+        "address_id": "5",
+        "address_details": "001 Eliza Ferry Suite 929 Schillerfurt, WI 60335-2125"
+      },
+      {
+        "address_id": "6",
+        "address_details": "8013 O'Keefe Harbors New Baronview, AR 57984"
+      },
+      {
+        "address_id": "7",
+        "address_details": "50445 Gerhold Springs Jaleelstad, IL 16333-3222"
+      },
+      {
+        "address_id": "8",
+        "address_details": "13460 Rylee Green South Domenicamouth, NM 36408-2902"
+      },
+      {
+        "address_id": "9",
+        "address_details": "59479 Eladio Cliff Wymanside, PA 69696-5826"
+      },
+      {
+        "address_id": "10",
+        "address_details": "4959 Dixie Oval North Timothyberg, OK 88659"
+      },
+      {
+        "address_id": "11",
+        "address_details": "80770 Borer Square Lillianaborough, NE 46012-9033"
+      },
+      {
+        "address_id": "12",
+        "address_details": "83114 Vanessa Mountains Suite 788 North Kara, CA 25470-9357"
+      },
+      {
+        "address_id": "13",
+        "address_details": "078 Jameson Avenue Cyrusberg, MN 88459-2009"
+      },
+      {
+        "address_id": "14",
+        "address_details": "0335 Ferne Dale East Lura, AZ 62151-8685"
+      },
+      {
+        "address_id": "15",
+        "address_details": "140 Norene Ford Port Buddymouth, MA 08157-7414"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 26,
+    "db_id": "customers_and_orders",
+    "question": "Покажите все идентификаторы клиентов и имена клиентов.",
+    "reference_query": "ВЫБРАТЬ Код, customer_name ИЗ Справочник.Customers",
+    "rows": [
+      {
+        "Код": "1",
+        "customer_name": "Jeromy"
+      },
+      {
+        "Код": "2",
+        "customer_name": "Edmond"
+      },
+      {
+        "Код": "3",
+        "customer_name": "Twila"
+      },
+      {
+        "Код": "4",
+        "customer_name": "Madelynn"
+      },
+      {
+        "Код": "5",
+        "customer_name": "Nya"
+      },
+      {
+        "Код": "6",
+        "customer_name": "Kenna"
+      },
+      {
+        "Код": "7",
+        "customer_name": "Katrina"
+      },
+      {
+        "Код": "8",
+        "customer_name": "Jaylan"
+      },
+      {
+        "Код": "9",
+        "customer_name": "Jeremie"
+      },
+      {
+        "Код": "10",
+        "customer_name": "Lenny"
+      },
+      {
+        "Код": "11",
+        "customer_name": "Gunner"
+      },
+      {
+        "Код": "12",
+        "customer_name": "Abe"
+      },
+      {
+        "Код": "13",
+        "customer_name": "Kennith"
+      },
+      {
+        "Код": "14",
+        "customer_name": "Mittie"
+      },
+      {
+        "Код": "15",
+        "customer_name": "Alexandrine"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 27,
+    "db_id": "customers_and_orders",
+    "question": "Покажите все идентификаторы продуктов, коды типов продуктов и наименования продуктов.",
+    "reference_query": "ВЫБРАТЬ Код, Наименование, product_name ИЗ Справочник.Products",
+    "rows": [
+      {
+        "Код": "1",
+        "Наименование": "Monitor",
+        "product_name": "Monitor"
+      },
+      {
+        "Код": "2",
+        "Наименование": "Topping",
+        "product_name": "Topping"
+      },
+      {
+        "Код": "3",
+        "Наименование": "Black Jeans",
+        "product_name": "Black Jeans"
+      },
+      {
+        "Код": "4",
+        "Наименование": "Blue Jeans",
+        "product_name": "Blue Jeans"
+      },
+      {
+        "Код": "5",
+        "Наименование": "Yellow Jeans",
+        "product_name": "Yellow Jeans"
+      },
+      {
+        "Код": "6",
+        "Наименование": "Gray Jeans",
+        "product_name": "Gray Jeans"
+      },
+      {
+        "Код": "7",
+        "Наименование": "Mouse",
+        "product_name": "Mouse"
+      },
+      {
+        "Код": "8",
+        "Наименование": "White Topping",
+        "product_name": "White Topping"
+      },
+      {
+        "Код": "9",
+        "Наименование": "Keyboard",
+        "product_name": "Keyboard"
+      },
+      {
+        "Код": "10",
+        "Наименование": "Drive",
+        "product_name": "Drive"
+      },
+      {
+        "Код": "11",
+        "Наименование": "Purple Topping",
+        "product_name": "Purple Topping"
+      },
+      {
+        "Код": "12",
+        "Наименование": "Black Topping",
+        "product_name": "Black Topping"
+      },
+      {
+        "Код": "13",
+        "Наименование": "Yellow Topping",
+        "product_name": "Yellow Topping"
+      },
+      {
+        "Код": "14",
+        "Наименование": "DVD",
+        "product_name": "DVD"
+      },
+      {
+        "Код": "15",
+        "Наименование": "Blue Topping",
+        "product_name": "Blue Topping"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 28,
+    "db_id": "customers_and_orders",
+    "question": "Каковы все идентификаторы адресов и детали адресов?",
+    "reference_query": "ВЫБРАТЬ Код КАК address_id, Наименование КАК address_details ИЗ Справочник.Addresses",
+    "rows": [
+      {
+        "address_id": "1",
+        "address_details": "2632 Ofelia Stream Apt. 537 Rueckerborough, NV 78430-4096"
+      },
+      {
+        "address_id": "2",
+        "address_details": "481 Tyrique Junction West Kali, UT 16070-1379"
+      },
+      {
+        "address_id": "3",
+        "address_details": "4363 Otilia Hill Landenshire, ND 45637"
+      },
+      {
+        "address_id": "4",
+        "address_details": "1734 Klocko Views Suite 840 Schusterfort, WY 34067-3366"
+      },
+      {
+        "address_id": "5",
+        "address_details": "001 Eliza Ferry Suite 929 Schillerfurt, WI 60335-2125"
+      },
+      {
+        "address_id": "6",
+        "address_details": "8013 O'Keefe Harbors New Baronview, AR 57984"
+      },
+      {
+        "address_id": "7",
+        "address_details": "50445 Gerhold Springs Jaleelstad, IL 16333-3222"
+      },
+      {
+        "address_id": "8",
+        "address_details": "13460 Rylee Green South Domenicamouth, NM 36408-2902"
+      },
+      {
+        "address_id": "9",
+        "address_details": "59479 Eladio Cliff Wymanside, PA 69696-5826"
+      },
+      {
+        "address_id": "10",
+        "address_details": "4959 Dixie Oval North Timothyberg, OK 88659"
+      },
+      {
+        "address_id": "11",
+        "address_details": "80770 Borer Square Lillianaborough, NE 46012-9033"
+      },
+      {
+        "address_id": "12",
+        "address_details": "83114 Vanessa Mountains Suite 788 North Kara, CA 25470-9357"
+      },
+      {
+        "address_id": "13",
+        "address_details": "078 Jameson Avenue Cyrusberg, MN 88459-2009"
+      },
+      {
+        "address_id": "14",
+        "address_details": "0335 Ferne Dale East Lura, AZ 62151-8685"
+      },
+      {
+        "address_id": "15",
+        "address_details": "140 Norene Ford Port Buddymouth, MA 08157-7414"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 29,
+    "db_id": "customers_and_orders",
+    "question": "Каковы идентификаторы и имена всех клиентов?",
+    "reference_query": "ВЫБРАТЬ Код, customer_name ИЗ Справочник.Customers",
+    "rows": [
+      {
+        "Код": "1",
+        "customer_name": "Jeromy"
+      },
+      {
+        "Код": "2",
+        "customer_name": "Edmond"
+      },
+      {
+        "Код": "3",
+        "customer_name": "Twila"
+      },
+      {
+        "Код": "4",
+        "customer_name": "Madelynn"
+      },
+      {
+        "Код": "5",
+        "customer_name": "Nya"
+      },
+      {
+        "Код": "6",
+        "customer_name": "Kenna"
+      },
+      {
+        "Код": "7",
+        "customer_name": "Katrina"
+      },
+      {
+        "Код": "8",
+        "customer_name": "Jaylan"
+      },
+      {
+        "Код": "9",
+        "customer_name": "Jeremie"
+      },
+      {
+        "Код": "10",
+        "customer_name": "Lenny"
+      },
+      {
+        "Код": "11",
+        "customer_name": "Gunner"
+      },
+      {
+        "Код": "12",
+        "customer_name": "Abe"
+      },
+      {
+        "Код": "13",
+        "customer_name": "Kennith"
+      },
+      {
+        "Код": "14",
+        "customer_name": "Mittie"
+      },
+      {
+        "Код": "15",
+        "customer_name": "Alexandrine"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 30,
+    "db_id": "customers_and_orders",
+    "question": "Каковы идентификаторы, коды типов и наименования всех продуктов?",
+    "reference_query": "ВЫБРАТЬ Код, Наименование, product_name ИЗ Справочник.Products",
+    "rows": [
+      {
+        "Код": "1",
+        "Наименование": "Monitor",
+        "product_name": "Monitor"
+      },
+      {
+        "Код": "2",
+        "Наименование": "Topping",
+        "product_name": "Topping"
+      },
+      {
+        "Код": "3",
+        "Наименование": "Black Jeans",
+        "product_name": "Black Jeans"
+      },
+      {
+        "Код": "4",
+        "Наименование": "Blue Jeans",
+        "product_name": "Blue Jeans"
+      },
+      {
+        "Код": "5",
+        "Наименование": "Yellow Jeans",
+        "product_name": "Yellow Jeans"
+      },
+      {
+        "Код": "6",
+        "Наименование": "Gray Jeans",
+        "product_name": "Gray Jeans"
+      },
+      {
+        "Код": "7",
+        "Наименование": "Mouse",
+        "product_name": "Mouse"
+      },
+      {
+        "Код": "8",
+        "Наименование": "White Topping",
+        "product_name": "White Topping"
+      },
+      {
+        "Код": "9",
+        "Наименование": "Keyboard",
+        "product_name": "Keyboard"
+      },
+      {
+        "Код": "10",
+        "Наименование": "Drive",
+        "product_name": "Drive"
+      },
+      {
+        "Код": "11",
+        "Наименование": "Purple Topping",
+        "product_name": "Purple Topping"
+      },
+      {
+        "Код": "12",
+        "Наименование": "Black Topping",
+        "product_name": "Black Topping"
+      },
+      {
+        "Код": "13",
+        "Наименование": "Yellow Topping",
+        "product_name": "Yellow Topping"
+      },
+      {
+        "Код": "14",
+        "Наименование": "DVD",
+        "product_name": "DVD"
+      },
+      {
+        "Код": "15",
+        "Наименование": "Blue Topping",
+        "product_name": "Blue Topping"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 31,
+    "db_id": "customers_and_orders",
+    "question": "Подсчитайте количество клиентов, которые не сделали ни одного заказа.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ customer_id ИЗ Документ.CustomerOrders)",
+    "rows": [
+      {
+        "Поле1": 5
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 32,
+    "db_id": "customers_and_orders",
+    "question": "Покажите все идентификаторы клиентов без заказов.",
+    "reference_query": "ВЫБРАТЬ Код ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ customer_id ИЗ Документ.CustomerOrders)",
+    "rows": [
+      {
+        "Код": "2"
+      },
+      {
+        "Код": "6"
+      },
+      {
+        "Код": "7"
+      },
+      {
+        "Код": "10"
+      },
+      {
+        "Код": "11"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 33,
+    "db_id": "customers_and_orders",
+    "question": "Каковы идентификаторы клиентов, которые не сделали ни одного заказа?",
+    "reference_query": "ВЫБРАТЬ Код ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ customer_id ИЗ Документ.CustomerOrders)",
+    "rows": [
+      {
+        "Код": "2"
+      },
+      {
+        "Код": "6"
+      },
+      {
+        "Код": "7"
+      },
+      {
+        "Код": "10"
+      },
+      {
+        "Код": "11"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 34,
+    "db_id": "government_shift",
+    "question": "Подсчитайте количество услуг.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Services",
+    "rows": [
+      {
+        "Поле1": 7
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 35,
+    "db_id": "government_shift",
+    "question": "Подсчитайте общее количество доступных деталей клиентов и услуг.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ РегистрСведений.CustomersAndServices",
+    "rows": [
+      {
+        "Поле1": 20
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 36,
+    "db_id": "government_shift",
+    "question": "Найдите всех клиентов, имя которых содержит \"Kutch\".",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Customers ГДЕ Наименование ПОДОБНО \"%Kutch%\"",
+    "rows": [
+      {
+        "Наименование": "Hardy Kutch"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 37,
+    "db_id": "government_shift",
+    "question": "Найдите детали клиентов, которые никогда не пользовались никакими услугами.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ Customer_ID ИЗ РегистрСведений.CustomersAndServices)",
+    "rows": [
+      {
+        "Наименование": "Miss Annamarie Lowe"
+      },
+      {
+        "Наименование": "Mr. Kraig Mohr"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 38,
+    "db_id": "government_shift",
+    "question": "Найдите детали услуг, которыми ни один клиент никогда не пользовался. Верните детали услуг.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Services ГДЕ Ссылка НЕ В (ВЫБРАТЬ Service_ID ИЗ РегистрСведений.CustomersAndServices)",
+    "rows": [],
+    "error": null
+  },
+  {
+    "id": 39,
+    "db_id": "store_1",
+    "question": "Перечислите все различные типы жанров.",
+    "reference_query": "ВЫБРАТЬ РАЗЛИЧНЫЕ Наименование ИЗ Справочник.Genres",
+    "rows": [
+      {
+        "Наименование": "Rock"
+      },
+      {
+        "Наименование": "Jazz"
+      },
+      {
+        "Наименование": "Metal"
+      },
+      {
+        "Наименование": "Alternative & Punk"
+      },
+      {
+        "Наименование": "Rock And Roll"
+      },
+      {
+        "Наименование": "Blues"
+      },
+      {
+        "Наименование": "Latin"
+      },
+      {
+        "Наименование": "Reggae"
+      },
+      {
+        "Наименование": "Pop"
+      },
+      {
+        "Наименование": "Soundtrack"
+      },
+      {
+        "Наименование": "Bossa Nova"
+      },
+      {
+        "Наименование": "Easy Listening"
+      },
+      {
+        "Наименование": "Heavy Metal"
+      },
+      {
+        "Наименование": "R&B/Soul"
+      },
+      {
+        "Наименование": "Electronica/Dance"
+      },
+      {
+        "Наименование": "World"
+      },
+      {
+        "Наименование": "Hip Hop/Rap"
+      },
+      {
+        "Наименование": "Science Fiction"
+      },
+      {
+        "Наименование": "TV Shows"
+      },
+      {
+        "Наименование": "Sci Fi & Fantasy"
+      },
+      {
+        "Наименование": "Drama"
+      },
+      {
+        "Наименование": "Comedy"
+      },
+      {
+        "Наименование": "Alternative"
+      },
+      {
+        "Наименование": "Classical"
+      },
+      {
+        "Наименование": "Opera"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 40,
+    "db_id": "store_1",
+    "question": "В какой компании работает клиент Эдуардо Мартинс?",
+    "reference_query": "ВЫБРАТЬ company ИЗ Справочник.Customers ГДЕ Наименование = \"Eduardo\" И last_name = \"Martins\"",
+    "rows": [
+      {
+        "company": "Woodstock Discos"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 41,
+    "db_id": "store_1",
+    "question": "Перечислите все альбомы, наименование которых начинается с буквы A, в алфавитном порядке.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Albums ГДЕ Наименование ПОДОБНО \"A%\" УПОРЯДОЧИТЬ ПО Наименование",
+    "rows": [
+      {
+        "Наименование": "A Copland Celebration, Vol. I"
+      },
+      {
+        "Наименование": "A Matter of Life and Death"
+      },
+      {
+        "Наименование": "A Real Dead One"
+      },
+      {
+        "Наименование": "A Real Live One"
+      },
+      {
+        "Наименование": "A Soprano Inspired"
+      },
+      {
+        "Наименование": "A TempestadeTempestade Ou O Livro Dos Dias"
+      },
+      {
+        "Наименование": "A-Sides"
+      },
+      {
+        "Наименование": "Ace Of Spades"
+      },
+      {
+        "Наименование": "Achtung Baby"
+      },
+      {
+        "Наименование": "Acústico"
+      },
+      {
+        "Наименование": "Acústico MTV"
+      },
+      {
+        "Наименование": "Acústico MTV live"
+      },
+      {
+        "Наименование": "Adams, John: The Chairman Dances"
+      },
+      {
+        "Наименование": "Adorate Deum: Gregorian Chant from the Proper of the Mass"
+      },
+      {
+        "Наименование": "Afrociberdelia"
+      },
+      {
+        "Наименование": "Album Of The Year"
+      },
+      {
+        "Наименование": "Alcohol Fueled Brewtality Live! [Disc 1]"
+      },
+      {
+        "Наименование": "Alcohol Fueled Brewtality Live! [Disc 2]"
+      },
+      {
+        "Наименование": "All That You Can't Leave Behind"
+      },
+      {
+        "Наименование": "Allegri: Miserere"
+      },
+      {
+        "Наименование": "American Idiot"
+      },
+      {
+        "Наименование": "Angel Dust"
+      },
+      {
+        "Наименование": "Ao Vivo IMPORT"
+      },
+      {
+        "Наименование": "Appetite for Destruction"
+      },
+      {
+        "Наименование": "Aquaman"
+      },
+      {
+        "Наименование": "Are You Experienced?"
+      },
+      {
+        "Наименование": "Armada: Music from the Courts of England and Spain"
+      },
+      {
+        "Наименование": "Arquivo II"
+      },
+      {
+        "Наименование": "Arquivo Os Paralamas Do Sucesso"
+      },
+      {
+        "Наименование": "As Canções de Eu Tu Eles"
+      },
+      {
+        "Наименование": "Audioslave"
+      },
+      {
+        "Наименование": "Axé Bahia 2001"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 42,
+    "db_id": "store_1",
+    "question": "Найдите наименования треков, которые есть в плейлисте Movies, но не в плейлисте Music.",
+    "reference_query": "ВЫБРАТЬ T.Наименование ИЗ Справочник.Tracks КАК T ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.PlaylistTracks КАК PT ПО T.Ссылка = PT.track_id ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Playlists КАК P ПО PT.playlist_id = P.Ссылка ГДЕ P.Наименование = \"Movies\" И T.Ссылка НЕ В (ВЫБРАТЬ PT2.track_id ИЗ Справочник.PlaylistTracks КАК PT2 ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Playlists КАК P2 ПО PT2.playlist_id = P2.Ссылка ГДЕ P2.Наименование = \"Music\")",
+    "rows": [],
+    "error": null
+  },
+  {
+    "id": 43,
+    "db_id": "hospital_1",
+    "question": "Подсчитайте общее количество сделанных записей на приём.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Документ.Appointment",
+    "rows": [
+      {
+        "Поле1": 9
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 44,
+    "db_id": "hospital_1",
+    "question": "Вычислите среднюю стоимость процедур, по которым обучен врач Джон Вэнь.",
+    "reference_query": "ВЫБРАТЬ СРЕДНЕЕ(P.Cost) ИЗ Справочник.Procedures КАК P ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.TrainedIn КАК TI ПО P.Ссылка = TI.Treatment ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Physician КАК Phys ПО Phys.Ссылка = TI.Physician ГДЕ Phys.Наименование = \"John Wen\"",
+    "rows": [
+      {
+        "Cost": 4324.857143
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 45,
+    "db_id": "hospital_1",
+    "question": "Найдите отделение с наибольшим количеством сотрудников.",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 D.Наименование ИЗ Справочник.Department КАК D ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.AffiliatedWith КАК AW ПО D.Ссылка = AW.Department СГРУППИРОВАТЬ ПО D.Наименование УПОРЯДОЧИТЬ ПО КОЛИЧЕСТВО(*) УБЫВ",
+    "rows": [
+      {
+        "Наименование": "General Medicine"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 46,
+    "db_id": "hospital_1",
+    "question": "Найдите количество пациентов, которые не принимают лекарство Procrastin-X.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Patient ГДЕ Ссылка НЕ В (ВЫБРАТЬ Pr.Patient ИЗ РегистрСведений.Prescribes КАК Pr ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Medication КАК M ПО Pr.Medication = M.Ссылка ГДЕ M.Наименование = \"Procrastin-X\")",
+    "rows": [
+      {
+        "Поле1": 3
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 47,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Подсчитайте количество счетов.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Accounts",
+    "rows": [
+      {
+        "Поле1": 15
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 48,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Перечислите все коды типов бюджета и описания.",
+    "reference_query": "ВЫБРАТЬ Код КАК budget_type_code, Наименование КАК budget_type_description ИЗ Справочник.RefBudgetCodes",
+    "rows": [
+      {
+        "budget_type_code": "GV",
+        "budget_type_description": "Government"
+      },
+      {
+        "budget_type_code": "ORG",
+        "budget_type_description": "Organisation"
+      },
+      {
+        "budget_type_code": "SF",
+        "budget_type_description": "Self founded"
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 49,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Подсчитайте количество документов, у которых нет расходов.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Документ.Documents ГДЕ Ссылка НЕ В (ВЫБРАТЬ Document_ID ИЗ РегистрСведений.DocumentsWithExpenses)",
+    "rows": [
+      {
+        "Поле1": 5
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": 50,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Верните идентификаторы документов, у которых нет расходов.",
+    "reference_query": "ВЫБРАТЬ Номер ИЗ Документ.Documents ГДЕ Ссылка НЕ В (ВЫБРАТЬ Document_ID ИЗ РегистрСведений.DocumentsWithExpenses)",
+    "rows": [
+      {
+        "Номер": "29"
+      },
+      {
+        "Номер": "42"
+      },
+      {
+        "Номер": "121"
+      },
+      {
+        "Номер": "181"
+      },
+      {
+        "Номер": "318"
+      }
+    ],
+    "error": null
+  }
+]

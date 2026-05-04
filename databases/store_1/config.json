@@ -1,0 +1,5 @@
+{
+  "name": "Store1",
+  "connection_string": "File=\"C:\\Users\\Дарья\\Documents\\1CBASE\\Store1\";",
+  "spider_dir": "C:\\Users\\Дарья\\Desktop\\Text_2_1CQuery\\spider_data\\mini_spider\\database"
+}

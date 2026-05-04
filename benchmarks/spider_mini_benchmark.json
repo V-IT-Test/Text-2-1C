@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "db_id": "race_track",
+    "question": "Подсчитайте количество гонок.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Race",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 2,
+    "db_id": "race_track",
+    "question": "Покажите наименование, класс и дату для всех гонок.",
+    "reference_query": "ВЫБРАТЬ Наименование, Class, Date ИЗ Справочник.Race",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 3,
+    "db_id": "race_track",
+    "question": "Покажите наименование и местоположение всех трасс.",
+    "reference_query": "ВЫБРАТЬ Наименование, Location ИЗ Справочник.Track",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 4,
+    "db_id": "race_track",
+    "question": "Каковы наименования и местоположения всех трасс?",
+    "reference_query": "ВЫБРАТЬ Наименование, Location ИЗ Справочник.Track",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 5,
+    "db_id": "race_track",
+    "question": "Каковы наименования, классы и даты всех гонок?",
+    "reference_query": "ВЫБРАТЬ Наименование, Class, Date ИЗ Справочник.Race",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 6,
+    "db_id": "race_track",
+    "question": "Верните наименования трасс, на которых не проводилось ни одной гонки.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Track ГДЕ Ссылка НЕ В (ВЫБРАТЬ Track_ID ИЗ Справочник.Race)",
+    "difficulty": "hard",
+    "score": 2
+  },
+  {
+    "id": 7,
+    "db_id": "race_track",
+    "question": "Найдите местоположения, где есть и трассы с количеством мест более 90000, и трассы с количеством мест менее 70000.",
+    "reference_query": "ВЫБРАТЬ РАЗЛИЧНЫЕ T1.Location ИЗ Справочник.Track КАК T1 ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Track КАК T2 ПО T1.Location = T2.Location ГДЕ T1.Seating > 90000 И T2.Seating < 70000",
+    "difficulty": "extra",
+    "score": 3
+  },
+  {
+    "id": 8,
+    "db_id": "vehicle_driver",
+    "question": "Верните среднюю максимальную скорость всех транспортных средств.",
+    "reference_query": "ВЫБРАТЬ СРЕДНЕЕ(Top_Speed) ИЗ Справочник.Vehicle",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 9,
+    "db_id": "vehicle_driver",
+    "question": "Какова средняя максимальная скорость транспортных средств?",
+    "reference_query": "ВЫБРАТЬ СРЕДНЕЕ(Top_Speed) ИЗ Справочник.Vehicle",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 10,
+    "db_id": "vehicle_driver",
+    "question": "Укажите год выпуска, модель и производителя каждого транспортного средства.",
+    "reference_query": "ВЫБРАТЬ Build_Year, Наименование, Builder ИЗ Справочник.Vehicle",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 11,
+    "db_id": "vehicle_driver",
+    "question": "Каковы год выпуска, наименование модели и производитель транспортных средств?",
+    "reference_query": "ВЫБРАТЬ Build_Year, Наименование, Builder ИЗ Справочник.Vehicle",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 12,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество разных водителей, которые управляли транспортными средствами, выпущенными в 2012 году.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(РАЗЛИЧНЫЕ VD.Driver_ID) ИЗ РегистрСведений.VehicleDriver КАК VD ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Vehicle КАК V ПО VD.Vehicle_ID = V.Ссылка ГДЕ V.Build_Year = 2012",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 13,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество водителей, участвовавших в гонках в каждой серии.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) КАК Количество, Racing_Series ИЗ Справочник.Driver СГРУППИРОВАТЬ ПО Racing_Series",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 14,
+    "db_id": "vehicle_driver",
+    "question": "Сколько водителей участвовало в гонках в каждой гоночной серии?",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) КАК Количество, Racing_Series ИЗ Справочник.Driver СГРУППИРОВАТЬ ПО Racing_Series",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 15,
+    "db_id": "vehicle_driver",
+    "question": "Сколько водителей управляли транспортными средствами, выпущенными в 2012 году?",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(РАЗЛИЧНЫЕ VD.Driver_ID) ИЗ РегистрСведений.VehicleDriver КАК VD ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Vehicle КАК V ПО VD.Vehicle_ID = V.Ссылка ГДЕ V.Build_Year = 2012",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 16,
+    "db_id": "vehicle_driver",
+    "question": "Верните имена водителей, которые управляли транспортными средствами с мощностью более 5000.",
+    "reference_query": "ВЫБРАТЬ РАЗЛИЧНЫЕ D.Наименование ИЗ Справочник.Driver КАК D ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.VehicleDriver КАК VD ПО D.Ссылка = VD.Driver_ID ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Vehicle КАК V ПО VD.Vehicle_ID = V.Ссылка ГДЕ V.Power > 5000",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 17,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество водителей, которые не управляли ни одним транспортным средством.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Driver ГДЕ Ссылка НЕ В (ВЫБРАТЬ Driver_ID ИЗ РегистрСведений.VehicleDriver)",
+    "difficulty": "hard",
+    "score": 2
+  },
+  {
+    "id": 18,
+    "db_id": "vehicle_driver",
+    "question": "Подсчитайте количество транспортных средств, чья максимальная скорость равна максимальной среди всех транспортных средств.",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 КОЛИЧЕСТВО(*) КАК Cnt ИЗ Справочник.Vehicle СГРУППИРОВАТЬ ПО Top_Speed УПОРЯДОЧИТЬ ПО Top_Speed УБЫВ",
+    "difficulty": "extra",
+    "score": 3
+  },
+  {
+    "id": 19,
+    "db_id": "vehicle_driver",
+    "question": "Сколько транспортных средств имеют максимальную скорость?",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 КОЛИЧЕСТВО(*) КАК Cnt ИЗ Справочник.Vehicle СГРУППИРОВАТЬ ПО Top_Speed УПОРЯДОЧИТЬ ПО Top_Speed УБЫВ",
+    "difficulty": "extra",
+    "score": 3
+  },
+  {
+    "id": 20,
+    "db_id": "city_record",
+    "question": "Найдите идентификаторы матчей, в которых проводилось соревнование \"1994 FIFA World Cup qualification\".",
+    "reference_query": "ВЫБРАТЬ Код ИЗ Справочник.Match ГДЕ Competition = \"1994 FIFA World Cup qualification\"",
+    "difficulty": "easy",
+    "score": 1
+  },
+  {
+    "id": 21,
+    "db_id": "city_record",
+    "question": "Найдите ВВП города с самым большим региональным населением.",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 GDP ИЗ Справочник.City УПОРЯДОЧИТЬ ПО Regional_Population УБЫВ",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 22,
+    "db_id": "city_record",
+    "question": "В каком городе самая высокая температура в феврале?",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 Справочник.City.Наименование ИЗ Справочник.City ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Temperature КАК Temp ПО Справочник.City.Код = Temp.Код УПОРЯДОЧИТЬ ПО Temp.Feb УБЫВ",
+    "difficulty": "hard",
+    "score": 3
+  },
+  {
+    "id": 23,
+    "db_id": "city_record",
+    "question": "Пожалуйста, выведите список городов, чьё региональное население превышает 8000000 или меньше 5000000.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.City ГДЕ Regional_Population > 10000000 ОБЪЕДИНИТЬ ВЫБРАТЬ Наименование ИЗ Справочник.City ГДЕ Regional_Population < 5000000",
+    "difficulty": "extra",
+    "score": 3
+  },
+  {
+    "id": 24,
+    "db_id": "customers_and_orders",
+    "question": "Подсчитайте количество адресов.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Addresses",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 25,
+    "db_id": "customers_and_orders",
+    "question": "Перечислите все идентификаторы адресов и детали адресов.",
+    "reference_query": "ВЫБРАТЬ Код КАК address_id, Наименование КАК address_details ИЗ Справочник.Addresses",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 26,
+    "db_id": "customers_and_orders",
+    "question": "Покажите все идентификаторы клиентов и имена клиентов.",
+    "reference_query": "ВЫБРАТЬ Код, customer_name ИЗ Справочник.Customers",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 27,
+    "db_id": "customers_and_orders",
+    "question": "Покажите все идентификаторы продуктов, коды типов продуктов и наименования продуктов.",
+    "reference_query": "ВЫБРАТЬ Код, Наименование, product_name ИЗ Справочник.Products",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 28,
+    "db_id": "customers_and_orders",
+    "question": "Каковы все идентификаторы адресов и детали адресов?",
+    "reference_query": "ВЫБРАТЬ Код КАК address_id, Наименование КАК address_details ИЗ Справочник.Addresses",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 29,
+    "db_id": "customers_and_orders",
+    "question": "Каковы идентификаторы и имена всех клиентов?",
+    "reference_query": "ВЫБРАТЬ Код, customer_name ИЗ Справочник.Customers",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 30,
+    "db_id": "customers_and_orders",
+    "question": "Каковы идентификаторы, коды типов и наименования всех продуктов?",
+    "reference_query": "ВЫБРАТЬ Код, Наименование, product_name ИЗ Справочник.Products",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 31,
+    "db_id": "customers_and_orders",
+    "question": "Подсчитайте количество клиентов, которые не сделали ни одного заказа.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ customer_id ИЗ Документ.CustomerOrders)",
+    "difficulty": "hard",
+    "score": 2
+  },
+  {
+    "id": 32,
+    "db_id": "customers_and_orders",
+    "question": "Покажите все идентификаторы клиентов без заказов.",
+    "reference_query": "ВЫБРАТЬ Код ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ customer_id ИЗ Документ.CustomerOrders)",
+    "difficulty": "extra",
+    "score": 2
+  },
+  {
+    "id": 33,
+    "db_id": "customers_and_orders",
+    "question": "Каковы идентификаторы клиентов, которые не сделали ни одного заказа?",
+    "reference_query": "ВЫБРАТЬ Код ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ customer_id ИЗ Документ.CustomerOrders)",
+    "difficulty": "extra",
+    "score": 2
+  },
+  {
+    "id": 34,
+    "db_id": "government_shift",
+    "question": "Подсчитайте количество услуг.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Services",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 35,
+    "db_id": "government_shift",
+    "question": "Подсчитайте общее количество доступных деталей клиентов и услуг.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ РегистрСведений.CustomersAndServices",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 36,
+    "db_id": "government_shift",
+    "question": "Найдите всех клиентов, имя которых содержит \"Kutch\".",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Customers ГДЕ Наименование ПОДОБНО \"%Kutch%\"",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 37,
+    "db_id": "government_shift",
+    "question": "Найдите детали клиентов, которые никогда не пользовались никакими услугами.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Customers ГДЕ Ссылка НЕ В (ВЫБРАТЬ Customer_ID ИЗ РегистрСведений.CustomersAndServices)",
+    "difficulty": "hard",
+    "score": 2
+  },
+  {
+    "id": 38,
+    "db_id": "government_shift",
+    "question": "Найдите детали услуг, которыми ни один клиент никогда не пользовался. Верните детали услуг.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Services ГДЕ Ссылка НЕ В (ВЫБРАТЬ Service_ID ИЗ РегистрСведений.CustomersAndServices)",
+    "difficulty": "extra",
+    "score": 3
+  },
+  {
+    "id": 39,
+    "db_id": "store_1",
+    "question": "Перечислите все различные типы жанров.",
+    "reference_query": "ВЫБРАТЬ РАЗЛИЧНЫЕ Наименование ИЗ Справочник.Genres",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 40,
+    "db_id": "store_1",
+    "question": "В какой компании работает клиент Эдуардо Мартинс?",
+    "reference_query": "ВЫБРАТЬ company ИЗ Справочник.Customers ГДЕ Наименование = \"Eduardo\" И last_name = \"Martins\"",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 41,
+    "db_id": "store_1",
+    "question": "Перечислите все альбомы, наименование которых начинается с буквы A, в алфавитном порядке.",
+    "reference_query": "ВЫБРАТЬ Наименование ИЗ Справочник.Albums ГДЕ Наименование ПОДОБНО \"A%\" УПОРЯДОЧИТЬ ПО Наименование",
+    "difficulty": "hard",
+    "score": 3
+  },
+  {
+    "id": 42,
+    "db_id": "store_1",
+    "question": "Найдите наименования треков, которые есть в плейлисте Movies, но не в плейлисте Music.",
+    "reference_query": "ВЫБРАТЬ T.Наименование ИЗ Справочник.Tracks КАК T ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.PlaylistTracks КАК PT ПО T.Ссылка = PT.track_id ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Playlists КАК P ПО PT.playlist_id = P.Ссылка ГДЕ P.Наименование = \"Movies\" И T.Ссылка НЕ В (ВЫБРАТЬ PT2.track_id ИЗ Справочник.PlaylistTracks КАК PT2 ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Playlists КАК P2 ПО PT2.playlist_id = P2.Ссылка ГДЕ P2.Наименование = \"Music\")",
+    "difficulty": "extra",
+    "score": 4
+  },
+  {
+    "id": 43,
+    "db_id": "hospital_1",
+    "question": "Подсчитайте общее количество сделанных записей на приём.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Документ.Appointment",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 44,
+    "db_id": "hospital_1",
+    "question": "Вычислите среднюю стоимость процедур, по которым обучен врач Джон Вэнь.",
+    "reference_query": "ВЫБРАТЬ СРЕДНЕЕ(P.Cost) ИЗ Справочник.Procedures КАК P ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.TrainedIn КАК TI ПО P.Ссылка = TI.Treatment ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Physician КАК Phys ПО Phys.Ссылка = TI.Physician ГДЕ Phys.Наименование = \"John Wen\"",
+    "difficulty": "medium",
+    "score": 2
+  },
+  {
+    "id": 45,
+    "db_id": "hospital_1",
+    "question": "Найдите отделение с наибольшим количеством сотрудников.",
+    "reference_query": "ВЫБРАТЬ ПЕРВЫЕ 1 D.Наименование ИЗ Справочник.Department КАК D ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.AffiliatedWith КАК AW ПО D.Ссылка = AW.Department СГРУППИРОВАТЬ ПО D.Наименование УПОРЯДОЧИТЬ ПО КОЛИЧЕСТВО(*) УБЫВ",
+    "difficulty": "hard",
+    "score": 3
+  },
+  {
+    "id": 46,
+    "db_id": "hospital_1",
+    "question": "Найдите количество пациентов, которые не принимают лекарство Procrastin-X.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Patient ГДЕ Ссылка НЕ В (ВЫБРАТЬ Pr.Patient ИЗ РегистрСведений.Prescribes КАК Pr ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Medication КАК M ПО Pr.Medication = M.Ссылка ГДЕ M.Наименование = \"Procrastin-X\")",
+    "difficulty": "extra",
+    "score": 3
+  },
+  {
+    "id": 47,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Подсчитайте количество счетов.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Справочник.Accounts",
+    "difficulty": "easy",
+    "score": 0
+  },
+  {
+    "id": 48,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Перечислите все коды типов бюджета и описания.",
+    "reference_query": "ВЫБРАТЬ Код КАК budget_type_code, Наименование КАК budget_type_description ИЗ Справочник.RefBudgetCodes",
+    "difficulty": "medium",
+    "score": 1
+  },
+  {
+    "id": 49,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Подсчитайте количество документов, у которых нет расходов.",
+    "reference_query": "ВЫБРАТЬ КОЛИЧЕСТВО(*) ИЗ Документ.Documents ГДЕ Ссылка НЕ В (ВЫБРАТЬ Document_ID ИЗ РегистрСведений.DocumentsWithExpenses)",
+    "difficulty": "hard",
+    "score": 2
+  },
+  {
+    "id": 50,
+    "db_id": "cre_Docs_and_Epenses",
+    "question": "Верните идентификаторы документов, у которых нет расходов.",
+    "reference_query": "ВЫБРАТЬ Номер ИЗ Документ.Documents ГДЕ Ссылка НЕ В (ВЫБРАТЬ Document_ID ИЗ РегистрСведений.DocumentsWithExpenses)",
+    "difficulty": "extra",
+    "score": 2
+  }
+]

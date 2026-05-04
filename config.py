@@ -4,9 +4,7 @@ from pathlib import Path
 
 # --- Feature flags ---
 PIPELINE = {
-    "ambiguity_resolver": False,   # уточнять неоднозначности у пользователя
     "schema_loader":      False,   # загружать схему базы в контекст LLM
-    "query_decomposer":   False,   # декомпозировать запрос на подзапросы
 }
 
 # --- LLM ---
@@ -17,9 +15,6 @@ LLM_MODELS: dict[str, str] = {
     "gpt-5.4-mini (средняя)":        "gpt-5.4-mini",
     "gpt-4o-mini (лёгкая)":          "gpt-4o-mini",
     "o4-mini (думающая)":            "o4-mini",
-    "deepseek-v4-pro (мощная)":      "deepseek-v4-pro",
-    "deepseek-v3 (средняя)":         "deepseek-v3",
-    "deepseek-v4-flash (лёгкая)":    "deepseek-v4-flash",
 }
 
 # --- Databases ---

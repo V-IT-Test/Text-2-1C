@@ -133,10 +133,6 @@ with st.sidebar:
         "Execution feedback",
         help="Запрос автоматически тестируется в 1С после генерации; при ошибке LLM исправляет его (до 2 попыток)",
     )
-    use_ambiguity = st.toggle(
-        "Уточнять неоднозначности",
-        value=PIPELINE["ambiguity_resolver"],
-    )
 
 if "query_editor" not in st.session_state:
     st.session_state.query_editor = ""
