@@ -133,6 +133,11 @@ with st.sidebar:
         "Execution feedback",
         help="Запрос автоматически тестируется в 1С после генерации; при ошибке LLM исправляет его (до 2 попыток)",
     )
+    use_cascade = st.toggle(
+        "Model cascade",
+        value=PIPELINE["use_cascade"],
+        help="Если выбрана модель мощнее gpt-4o-mini: сначала генерируем gpt-4o-mini, выполняем, проверяем SM. Если результат верен — не тратим основную модель.",
+    )
 
 if "query_editor" not in st.session_state:
     st.session_state.query_editor = ""

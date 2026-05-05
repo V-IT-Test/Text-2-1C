@@ -1,10 +1,23 @@
 """
-Metrics for NL-to-1C query evaluation.
+Метрики для оценки качества NL-to-1C запросов.
 
-EV  — Execution Validity:  1 if query ran without error, else 0
-EX  — Execution Accuracy:  1 if result rows match reference (order-insensitive), else 0
-CM  — Component Matching:  F1 over keyword + object-reference token sets
-SM  — Semantic Match:      1 if result rows answer the user's question (LLM-judged)
+EV  — Execution Validity (Валидность выполнения).
+      1 = запрос выполнился в 1С без ошибки, 0 = ошибка исполнения.
+
+EX  — Execution Accuracy (Точность выполнения).
+      1 = результат полностью совпадает с эталоном (без учета порядка строк), 0 = несовпадение.
+
+CM  — Component Matching (Совпадение компонентов).
+      F1-мера по пересечению множеств ключевых слов языка запросов 1С (ВЫБРАТЬ, ИЗ, СГРУППИРОВАТЬ ПО и др.)
+      и объектных ссылок (Справочник.Товары, Документ.ЗаказТовара.Состав и др.)
+      между сгенерированным и эталонным запросом. Диапазон [0, 1].
+
+SM  — Semantic Match (Семантическое соответствие).
+      1 = LLM-судья (gpt-4.1-mini) считает, что результат отвечает на исходный вопрос, 0 = не отвечает.
+      Вызывается только при EV=1 и EX=0 для экономии API-вызовов.
+
+EXS — EX or SM (Итоговая семантическая корректность).
+      1 если EX=1 или SM=1, иначе 0. Агрегирует точный и семантический критерии.
 """
 import json
 import re

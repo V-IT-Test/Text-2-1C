@@ -182,26 +182,49 @@ def run_experiment(cfg: dict, exp_name: str) -> None:
             model=exp.get("model", ""),
         )
 
+        main_model = exp.get("model", "")
+        use_cascade = exp.get("use_cascade", False)
+
         ref_rows = ref.get(qid, {}).get("rows", [])
         gen_query = ""
         gen_error = None
         gen_rows: list[dict] = []
+        cascade_used = False
+        cascade_exs_val = 0.0
+        cascade_ex_val = 0.0
 
-        try:
-            if use_ef:
-                gen_query, _ = translate_with_feedback(
-                    entry["question"], conn, **shared
-                )
-            else:
-                gen_query = translate(entry["question"], conn_str=conn, **shared)
-        except Exception as e:
-            gen_error = f"LLM error: {e}"
+        # Model cascade: try cheap model first
+        if use_cascade:
+            from pipeline.cascade import try_cascade
+            cascade_result = try_cascade(
+                entry["question"], conn, ref_rows,
+                shared, main_model, use_ef,
+            )
+            if cascade_result:
+                cascade_exs_val = cascade_result["cascade_exs_val"]
+                cascade_ex_val = cascade_result["cascade_ex_val"]
+                if not cascade_result.get("_cascade_failed"):
+                    gen_query = cascade_result["gen_query"]
+                    gen_rows = cascade_result["gen_rows"]
+                    cascade_used = True
 
-        if gen_query and not gen_error:
+        # Main model (if cascade didn't succeed or wasn't used)
+        if not cascade_used:
             try:
-                gen_rows = execute(conn, gen_query)
+                if use_ef:
+                    gen_query, _ = translate_with_feedback(
+                        entry["question"], conn, **shared
+                    )
+                else:
+                    gen_query = translate(entry["question"], conn_str=conn, **shared)
             except Exception as e:
-                gen_error = str(e)
+                gen_error = f"LLM error: {e}"
+
+            if gen_query and not gen_error:
+                try:
+                    gen_rows = execute(conn, gen_query)
+                except Exception as e:
+                    gen_error = str(e)
 
         ev = execution_validity(gen_error)
         ex = execution_accuracy(ref_rows, gen_rows, gen_error)
@@ -215,22 +238,47 @@ def run_experiment(cfg: dict, exp_name: str) -> None:
             sm = semantic_match(entry["question"], gen_rows, gen_error, gen_query)
         exs = 1.0 if (ex == 1 or sm == 1) else 0.0
 
+        solved_by = ""
+        if exs == 1:
+            solved_by = "cascade" if cascade_used else "main"
+
         question_results.append({
             "id": qid,
             "db_id": db_id,
             "question": entry["question"],
             "reference_query": entry["reference_query"],
             "generated_query": gen_query,
+            "difficulty": entry.get("difficulty", ""),
             "ev": ev,
             "ex": ex,
             "cm": round(cm, 4),
             "sm": sm,
             "exs": exs,
+            "cascade_exs": cascade_exs_val,
+            "cascade_ex": cascade_ex_val,
+            "solved_by": solved_by,
             "error": gen_error,
         })
-        print(f"EV={ev:.0f} EX={ex:.0f} CM={cm:.2f} SM={sm:.0f} EXS={exs:.0f}")
+        cascade_label = " C" if cascade_used else ""
+        print(f"EV={ev:.0f} EX={ex:.0f} CM={cm:.2f} SM={sm:.0f} EXS={exs:.0f}{cascade_label}")
 
     n = len(question_results)
+    # Per-difficulty EXS breakdown
+    from collections import defaultdict
+    diff_exs: dict[str, list[float]] = defaultdict(list)
+    diff_total: dict[str, int] = defaultdict(int)
+    for r in question_results:
+        d = r["difficulty"]
+        diff_exs[d].append(r["exs"])
+        diff_total[d] += 1
+    exs_by_difficulty = {}
+    for d in ["easy", "medium", "hard", "extra"]:
+        cnt = diff_total.get(d, 0)
+        exs_by_difficulty[d] = {
+            "count": cnt,
+            "exs_sum": sum(diff_exs.get(d, [])),
+            "exs_rate": round(sum(diff_exs.get(d, [])) / cnt, 4) if cnt else 0,
+        }
     summary = {
         "ev": round(sum(r["ev"] for r in question_results) / n, 4),
         "ex": round(sum(r["ex"] for r in question_results) / n, 4),
@@ -239,6 +287,10 @@ def run_experiment(cfg: dict, exp_name: str) -> None:
         "exs": round(sum(r["exs"] for r in question_results) / n, 4),
     }
     print(f"\nSummary: EV={summary['ev']:.3f}  EX={summary['ex']:.3f}  CM={summary['cm']:.3f}  SM={summary['sm']:.3f}  EXS={summary['exs']:.3f}")
+    print("EXS by difficulty:  " + "  ".join(
+        f"{d}={exs_by_difficulty[d]['exs_sum']:.0f}/{exs_by_difficulty[d]['count']}"
+        for d in ["easy", "medium", "hard", "extra"]
+    ))
 
     results_dir = ROOT / "benchmarks" / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
@@ -253,6 +305,7 @@ def run_experiment(cfg: dict, exp_name: str) -> None:
                 "timestamp": datetime.now().isoformat(),
                 "questions": question_results,
                 "summary": summary,
+                "exs_by_difficulty": exs_by_difficulty,
             },
             ensure_ascii=False,
             indent=2,
@@ -276,6 +329,7 @@ def _config_key(config_dict: dict) -> str:
     if config_dict.get("use_value_linking"): parts.append("+vl")
     if config_dict.get("use_critic"): parts.append("+critic")
     if config_dict.get("use_exec_feedback"): parts.append("+ef")
+    if config_dict.get("use_cascade"): parts.append("+cascade")
     return "".join(parts) if parts else "base"
 
 
@@ -284,26 +338,28 @@ def _print_module_matrix(
 ) -> None:
     """Print a matrix: rows=questions, columns=models, right=EV/EX counters, bottom=averages."""
     n_models = len(models)
-    col_w = max(max((len(m) for m in models), default=4), 5)
-    Q = 40
-    ev_col_w = 3
-    ex_col_w = 3
+    col_w = max(max((len(m) for m in models), default=4), 7)
+    Q = 36
+    DIFF_MAP = {"easy": "e", "medium": "m", "hard": "h", "extra": "x"}
+    has_cascade = "+cascade" in config_label
 
     # Header
     model_header = " ".join(f"{m:^{col_w}}" for m in models)
-    line = f" {'#':>2} | {'Question':<{Q}} | {model_header} | EV | EX | SM |EXS"
+    line = f" {'#':>2} d | {'Question':<{Q}} | {model_header} | EV | EX | SM |EXS"
     sep = "-" * len(line)
     print(f"\nPipeline: {config_label}  ({len(questions)} questions, {n_models} models)")
     print(sep)
     print(line)
     print(sep)
 
-    # Compute per-model EV/EX/SM sums
+    # Compute per-model EV/EX/SM/EXS sums + cascade-only sums
     model_ev_sum = {m: 0.0 for m in models}
     model_ex_sum = {m: 0.0 for m in models}
     model_sm_sum = {m: 0.0 for m in models}
     model_exs_sum = {m: 0.0 for m in models}
     model_count = {m: 0 for m in models}
+    model_cascade_exs_sum = {m: 0.0 for m in models}
+    model_cascade_ex_sum = {m: 0.0 for m in models}
 
     for q in questions:
         cells = []
@@ -317,13 +373,24 @@ def _print_module_matrix(
             if r is None:
                 cells.append(f"{'—':^{col_w}}")
             else:
-                ex_val = r["ex"]
-                symbol = "1" if ex_val == 1 else "0"
+                if has_cascade and "solved_by" in r:
+                    sb = r.get("solved_by", "")
+                    exs_val = r.get("exs", 0)
+                    if exs_val == 1 and sb == "cascade":
+                        symbol = "1!"
+                    elif exs_val == 1:
+                        symbol = "1"
+                    else:
+                        symbol = "0"
+                else:
+                    symbol = "1" if r.get("exs", 0) == 1 else "0"
                 cells.append(f"{symbol:^{col_w}}")
                 model_ev_sum[m] += r["ev"]
                 model_ex_sum[m] += r["ex"]
                 model_sm_sum[m] += r.get("sm", 0)
                 model_exs_sum[m] += r.get("exs", 0)
+                model_cascade_exs_sum[m] += r.get("cascade_exs", 0)
+                model_cascade_ex_sum[m] += r.get("cascade_ex", 0)
                 model_count[m] += 1
                 if r["ev"] == 1:
                     ev_ok += 1
@@ -335,36 +402,62 @@ def _print_module_matrix(
                     exs_ok += 1
                 n_tested += 1
 
+        diff_char = DIFF_MAP.get(q.get("difficulty", ""), "?")
         ev_str = f"{ev_ok}/{n_tested}" if n_tested else "—"
         ex_str = f"{ex_ok}/{n_tested}" if n_tested else "—"
         sm_str = f"{sm_ok}/{n_tested}" if n_tested else "—"
         exs_str = f"{exs_ok}/{n_tested}" if n_tested else "—"
         cells_str = " ".join(cells)
-        print(f" {q['id']:>2} | {q['question'][:Q]:<{Q}} | {cells_str} | {ev_str:>3} | {ex_str:>3} | {sm_str:>3} | {exs_str:>3}")
+        print(f" {q['id']:>2} {diff_char} | {q['question'][:Q]:<{Q}} | {cells_str} | {ev_str:>3} | {ex_str:>3} | {sm_str:>3} | {exs_str:>3}")
 
     # Bottom summary row
     def _fmt(v):
         s = f"{v:.2f}"
         return s.replace("0.",".").replace("1.00","1.0")
     
+    def _fmt2(main_val: float, cascade_val: float, cnt: int) -> str:
+        """Format as X(Y) for cascade experiments, just X otherwise."""
+        x = _fmt(main_val)
+        if has_cascade and cnt > 0:
+            y = _fmt(cascade_val)
+            return f"{x}({y})"
+        return x
+    
     print(sep)
-    summary_cells = []
-    for m in models:
-        cnt = model_count[m]
-        ex_avg = model_ex_sum[m] / cnt if cnt else 0
-        summary_cells.append(_fmt(ex_avg)[:col_w])
+    # Compute overalls
+    total_cnt = sum(model_count[m] for m in models)
     ev_total = sum(model_ev_sum[m] for m in models)
     ex_total = sum(model_ex_sum[m] for m in models)
     sm_total = sum(model_sm_sum[m] for m in models)
     exs_total = sum(model_exs_sum[m] for m in models)
-    total_cnt = sum(model_count[m] for m in models)
+    cascade_exs_total = sum(model_cascade_exs_sum[m] for m in models)
+    cascade_ex_total = sum(model_cascade_ex_sum[m] for m in models)
     ev_all = ev_total / total_cnt if total_cnt else 0
     ex_all = ex_total / total_cnt if total_cnt else 0
     sm_all = sm_total / total_cnt if total_cnt else 0
     exs_all = exs_total / total_cnt if total_cnt else 0
-
-    cells_str = " ".join(f"{c:^{col_w}}" for c in summary_cells)
-    print(f" {'':>2} | {'AVG':<{Q}} | {cells_str} | {ev_all:.2f} | {ex_all:.2f} | {sm_all:.2f} | {exs_all:.2f}")
+    cascade_exs_all = cascade_exs_total / total_cnt if total_cnt else 0
+    cascade_ex_all = cascade_ex_total / total_cnt if total_cnt else 0
+    # AVG EX row
+    ex_cells = []
+    for m in models:
+        cnt = model_count[m]
+        ex_avg = model_ex_sum[m] / cnt if cnt else 0
+        c_ex_avg = model_cascade_ex_sum[m] / cnt if cnt else 0
+        ex_cells.append(_fmt2(ex_avg, c_ex_avg, cnt))
+    cells_str = " ".join(f"{c:^{col_w}}" for c in ex_cells)
+    overall_ex = _fmt2(ex_all, cascade_ex_all, total_cnt)
+    print(f" {'':>2}   | {'AVG EX':<{Q}} | {cells_str} | {ev_all:.2f} | {overall_ex:>4} | {sm_all:.2f} | {exs_all:.2f}")
+    # AVG EXS row
+    exs_cells = []
+    for m in models:
+        cnt = model_count[m]
+        exs_avg = model_exs_sum[m] / cnt if cnt else 0
+        c_exs_avg = model_cascade_exs_sum[m] / cnt if cnt else 0
+        exs_cells.append(_fmt2(exs_avg, c_exs_avg, cnt))
+    cells_str = " ".join(f"{c:^{col_w}}" for c in exs_cells)
+    overall_exs = _fmt2(exs_all, cascade_exs_all, total_cnt)
+    print(f" {'':>2}   | {'AVG EXS':<{Q}} | {cells_str} | {ev_all:.2f} | {ex_all:.2f} | {sm_all:.2f} | {overall_exs:>4}")
     print(sep)
 
 
@@ -444,9 +537,14 @@ def question_matrix(cfg: dict) -> None:
             for (m, vi), label in zip(col_refs, col_labels):
                 qd = persistent[ck][m][vi]["questions"].get(qid)
                 q_results[label] = {"ev": qd["ev"], "ex": qd["ex"], "cm": qd["cm"],
-                                     "sm": qd.get("sm", 0), "exs": qd.get("exs", 0)} if qd else None
+                                      "sm": qd.get("sm", 0), "exs": qd.get("exs", 0),
+                                      "cascade_exs": qd.get("cascade_exs", 0),
+                                      "cascade_ex": qd.get("cascade_ex", 0),
+                                      "solved_by": qd.get("solved_by", ""),
+                } if qd else None
             matrix_qs.append({
                 "id": qid,
+                "difficulty": entry.get("difficulty", ""),
                 "question": entry["question"],
                 "results": q_results,
             })
@@ -475,14 +573,20 @@ def show_report(_cfg: dict) -> None:
             latest[name] = data
 
     col = 38
-    header = f"{'Configuration':<{col}} {'Model':<18} {'EV':>6} {'EX':>6} {'CM':>6} {'SM':>6} {'EXS':>6}"
+    header = f"{'Configuration':<{col}} {'Model':<18} {'EV':>6} {'EX':>6} {'CM':>6} {'SM':>6} {'EXS':>6} {'easy':>6} {'med':>6} {'hard':>6} {'extra':>6}"
     print(header)
     print("-" * len(header))
     for name, data in sorted(latest.items()):
         s = data["summary"]
+        ebd = data.get("exs_by_difficulty", {})
+        diffs = " ".join(
+            f"{ebd.get(d, {}).get('exs_sum', 0):>5.0f}/{ebd.get(d, {}).get('count', 0)}"
+            for d in ["easy", "medium", "hard", "extra"]
+        )
         print(
             f"{name:<{col}} {data.get('model', '?'):<18}"
             f" {s['ev']:>6.3f} {s['ex']:>6.3f} {s['cm']:>6.3f} {s.get('sm', 0):>6.3f} {s.get('exs', 0):>6.3f}"
+            f" {diffs}"
         )
 
 

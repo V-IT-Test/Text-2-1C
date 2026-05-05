@@ -5,12 +5,14 @@ from pathlib import Path
 # --- Feature flags ---
 PIPELINE = {
     "schema_loader":      False,   # загружать схему базы в контекст LLM
+    "use_cascade":        False,   # model cascade: gpt-4o-mini first, then main model if needed
 }
 
 # --- LLM ---
 LLM_MODEL = "gpt-4o-mini"
 
 LLM_MODELS: dict[str, str] = {
+    "gpt-5.4-pro (completion-only, не работает)": "gpt-5.4-pro",
     "gpt-5.4 (мощная)":              "gpt-5.4",
     "gpt-5.4-mini (средняя)":        "gpt-5.4-mini",
     "gpt-4o-mini (лёгкая)":          "gpt-4o-mini",

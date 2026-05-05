@@ -21,10 +21,9 @@ reference_results: databases/demo/reference_results.json
 #   name              — уникальное имя (используется в именах файлов результатов)
 #
 #   model             — модель LLM (ключи из LLM_MODELS в config.py):
+#                         gpt-5.4       (самая мощная)
 #                         gpt-4o-mini       (лёгкая, дефолт)
 #                         gpt-5.4-mini      (средняя)
-#                         gpt-5.4           (мощная)
-#                         o4-mini           (думающая, reasoning)
 #                         gpt-5.4           (мощная)
 #                         o4-mini           (думающая, reasoning)
 #
@@ -53,99 +52,171 @@ reference_results: databases/demo/reference_results.json
 #   use_exec_feedback — автоматическое исправление по ошибке выполнения:
 #                         запрос выполняется, при ошибке LLM получает
 #                         текст ошибки и генерирует исправление (до 2 попыток)
+#
+#   use_cascade        — model cascade: если модель ≠ gpt-4o-mini,
+#                         сначала запрос генерируется gpt-4o-mini и выполняется;
+#                         если EX=1 или SM=1 — результат принимается без вызова
+#                         основной модели; иначе вызывается основная модель
 # ============================================================
 
 experiments:
 
-  # 1. Схема + продвинутый полный промпт
-  - name: schema_adv
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
+  # ══════════════════════════════════════════════════════════════
+  # gpt-5.4 + Cascade (2 эксперимента — топ-2 с model cascade)
+  # ══════════════════════════════════════════════════════════════
 
-  # 2. Схема + продвинутый краткий промпт
-  - name: schema_adv_short
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_short: true
-
-  # 3. Схема + продвинутый + Chain-of-Thought
-  - name: schema_adv_cot
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_cot: true
-
-  # 4. Схема + продвинутый + Query Plan
-  - name: schema_adv_qp
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_query_plan: true
-
-  # 5. Схема + продвинутый + Schema Linking
-  - name: schema_adv_sl
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_schema_linking: true
-
-  # 6. Схема + продвинутый + Value Linking
-  - name: schema_adv_vl
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_value_linking: true
-
-  # 7. Схема + продвинутый + Критик
-  - name: schema_adv_critic
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_critic: true
-
-  # 8. Схема + продвинутый + Execution Feedback
-  - name: schema_adv_ef
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_exec_feedback: true
-
-  # 9. Схема + продвинутый + CoT + Value Linking
-  - name: schema_adv_cot_vl
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_cot: true
-    use_value_linking: true
-
-  # 10. Схема + продвинутый + CoT + VL + Критик
-  - name: schema_adv_cot_vl_critic
-    model: gpt-4o-mini
-    use_schema: true
-    advanced_prompt: true
-    use_cot: true
-    use_value_linking: true
-    use_critic: true
-
-  # 11. Схема + продвинутый + CoT + VL + Exec Feedback
-  - name: schema_adv_cot_vl_ef
-    model: gpt-4o-mini
+  # 17. CoT + VL + Exec Feedback + Cascade
+  - name: pro_adv_cot_vl_ef_cascade
+    model: gpt-5.4
     use_schema: true
     advanced_prompt: true
     use_cot: true
     use_value_linking: true
     use_exec_feedback: true
+    use_cascade: true
 
-  # 12. Схема + продвинутый + CoT + VL + Критик + Exec Feedback
-  - name: schema_adv_cot_vl_critic_ef
-    model: gpt-4o-mini
+  # 18. CoT + VL + Критик + Exec Feedback + Cascade
+  - name: pro_adv_cot_vl_critic_ef_cascade
+    model: gpt-5.4
     use_schema: true
     advanced_prompt: true
     use_cot: true
     use_value_linking: true
     use_critic: true
     use_exec_feedback: true
+    use_cascade: true
+
+  # ══════════════════════════════════════════════════════════════
+  # gpt-5.4 (4 эксперимента — закомментированы)
+  # ══════════════════════════════════════════════════════════════
+
+  # # 13. Схема + продвинутый + CoT + Value Linking
+  # - name: pro_adv_cot_vl
+  #   model: gpt-5.4
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+  #   use_value_linking: true
+  #
+  # # 14. Схема + продвинутый + Schema Linking
+  # - name: pro_adv_sl
+  #   model: gpt-5.4
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_schema_linking: true
+  #
+  # # 15. Схема + продвинутый + CoT + VL + Exec Feedback
+  # - name: pro_adv_cot_vl_ef
+  #   model: gpt-5.4
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+  #   use_value_linking: true
+  #   use_exec_feedback: true
+  #
+  # # 16. Схема + продвинутый + CoT + VL + Критик + Exec Feedback
+  # - name: pro_adv_cot_vl_critic_ef
+  #   model: gpt-5.4
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+  #   use_value_linking: true
+  #   use_critic: true
+  #   use_exec_feedback: true
+
+  # ══════════════════════════════════════════════════════════════
+  # gpt-4o-mini (12 экспериментов — закомментированы)
+  # ══════════════════════════════════════════════════════════════
+
+  # # 1. Схема + продвинутый полный промпт
+  # - name: schema_adv
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+
+  # # 2. Схема + продвинутый краткий промпт
+  # - name: schema_adv_short
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_short: true
+
+  # # 3. Схема + продвинутый + Chain-of-Thought
+  # - name: schema_adv_cot
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+
+  # # 4. Схема + продвинутый + Query Plan
+  # - name: schema_adv_qp
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_query_plan: true
+
+  # # 5. Схема + продвинутый + Schema Linking
+  # - name: schema_adv_sl
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_schema_linking: true
+
+  # # 6. Схема + продвинутый + Value Linking
+  # - name: schema_adv_vl
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_value_linking: true
+
+  # # 7. Схема + продвинутый + Критик
+  # - name: schema_adv_critic
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_critic: true
+
+  # # 8. Схема + продвинутый + Execution Feedback
+  # - name: schema_adv_ef
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_exec_feedback: true
+
+  # # 9. Схема + продвинутый + CoT + Value Linking
+  # - name: schema_adv_cot_vl
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+  #   use_value_linking: true
+
+  # # 10. Схема + продвинутый + CoT + VL + Критик
+  # - name: schema_adv_cot_vl_critic
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+  #   use_value_linking: true
+  #   use_critic: true
+
+  # # 11. Схема + продвинутый + CoT + VL + Exec Feedback
+  # - name: schema_adv_cot_vl_ef
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+  #   use_value_linking: true
+  #   use_exec_feedback: true
+
+  # # 12. Схема + продвинутый + CoT + VL + Критик + Exec Feedback
+  # - name: schema_adv_cot_vl_critic_ef
+  #   model: gpt-4o-mini
+  #   use_schema: true
+  #   advanced_prompt: true
+  #   use_cot: true
+  #   use_value_linking: true
+  #   use_critic: true
+  #   use_exec_feedback: true
 
   # ══════════════════════════════════════════════════════════════
   # Лучшая комбинация (справочно, не запускается):

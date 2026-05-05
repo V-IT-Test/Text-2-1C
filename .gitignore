@@ -26,8 +26,8 @@ databases/*/XMLConfiguration/
 evaluation/results/
 *.log
 
-# Сторонние датасеты (Spider и т.п.) — большие, качаются по необходимости
-research/datasets/
+# Исследовательские заметки — локальные, не в репо
+research/
 
 # Сгенерированные документы (Word, PDF) — собираются скриптом из Markdown,
 # в репозитории храним только исходники.
@@ -39,7 +39,6 @@ tools/
 
 # Локальные внутренние документы — в репо не выкладываем.
 CLAUDE.md
-research/methods_discussion.md
 pipeline/IMPROVEMENTS.md
 **/SESSION_SUMMARY.md
 **/Session_summary.md

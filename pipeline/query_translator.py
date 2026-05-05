@@ -694,6 +694,8 @@ def translate_with_feedback(
     model: str = "",
     max_iterations: int = 2,
     log_fn=None,
+    critic_full_rules: bool = False,
+    critic_after_ef: bool = False,
 ) -> tuple[str, int]:
     """Generate a 1C query and silently auto-correct it using execution errors.
 
@@ -706,19 +708,19 @@ def translate_with_feedback(
             log_fn(msg)
 
     system = _pick_system_prompt(advanced_prompt, advanced_short)
-    query = translate(user_query, schema_context, advanced_prompt, advanced_short, use_cot, use_query_plan, use_schema_linking, use_value_linking, use_critic, connection_string, model=model, log_fn=log_fn)
+    query = translate(user_query, schema_context, advanced_prompt, advanced_short, use_cot, use_query_plan, use_schema_linking, use_value_linking, use_critic, connection_string, model=model, log_fn=log_fn, critic_full_rules=critic_full_rules)
 
     for iteration in range(1, max_iterations + 1):
         log(f"Попытка выполнения #{iteration}...")
         try:
             execute(connection_string, query)
             log(f"Запрос выполнен успешно.")
-            return query, iteration
+            break
         except Exception as error:
             log(f"Ошибка 1С: {str(error)[:200]}")
             if iteration == max_iterations:
                 log("Лимит итераций исчерпан — возвращается последний вариант запроса.")
-                break
+                return query, max_iterations
             log(f"Запрашиваю исправление у LLM (итерация {iteration + 1})...")
             fix_prompt = (
                 f"{_build_prompt(user_query, schema_context)}\n\n"
@@ -729,6 +731,16 @@ def translate_with_feedback(
             )
             kw = {"model": model} if model else {}
             query = ask_llm(fix_prompt, system=system, **kw)
+
+    # Post-EF critic (optional)
+    if critic_after_ef and use_critic:
+        from pipeline.critic import review_query
+        log("Критик (после EF): проверяю исправленный запрос...")
+        is_ok, critique = review_query(user_query, schema_context, query, model=model or "", log_fn=log, use_full_rules=critic_full_rules)
+        if is_ok:
+            log("Критик (после EF): запрос корректен.")
+        else:
+            log(f"Критик (после EF): замечания — {critique[:150]}")
 
     return query, max_iterations
 
@@ -746,6 +758,7 @@ def translate(
     conn_str: str = "",
     model: str = "",
     log_fn=None,
+    critic_full_rules: bool = False,
 ) -> str:
     def log(msg):
         if log_fn:
@@ -788,7 +801,7 @@ def translate(
     if use_critic:
         from pipeline.critic import review_query
         log("Критик: проверяю запрос...")
-        is_ok, critique = review_query(user_query, schema_context, query, model=model or "", log_fn=log)
+        is_ok, critique = review_query(user_query, schema_context, query, model=model or "", log_fn=log, use_full_rules=critic_full_rules)
         if is_ok:
             log("Критик: запрос корректен.")
         else:
